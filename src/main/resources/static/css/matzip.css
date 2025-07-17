@@ -54,3 +54,19 @@
     background-color: #007bff;
     color: #fff;
 }
+
+/* 테이블 컬럼 넓이 조정 */
+.table th:nth-child(1), /* 상호명 */
+.table td:nth-child(1) {
+    width: 15%;
+}
+
+.table th:nth-child(2), /* 주소 */
+.table td:nth-child(2) {
+    width: 15%;
+}
+
+.table th:nth-child(3), /* 전화번호 */
+.table td:nth-child(3) {
+    width: 15%;
+}

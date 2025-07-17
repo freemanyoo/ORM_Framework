@@ -2,7 +2,7 @@ package com.busanit501.boot_project.controller;
 
 import com.busanit501.boot_project.dto.PageRequestDTO;
 import com.busanit501.boot_project.dto.PageResponseDTO;
-import com.busanit501.boot_project.dto.matzip.MatzipResponseDTO;
+import com.busanit501.boot_project.dto.matzip.MatzipDTO;
 import com.busanit501.boot_project.service.MatzipService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,7 +23,7 @@ public class MatzipController {
     public void list(PageRequestDTO pageRequestDTO, Model model) {
         log.info("matzip list................" + pageRequestDTO);
 
-        PageResponseDTO<MatzipResponseDTO.Item> responseDTO = matzipService.getMatzipList(pageRequestDTO);
+        PageResponseDTO<MatzipDTO> responseDTO = matzipService.getMatzipList(pageRequestDTO);
 
         model.addAttribute("responseDTO", responseDTO);
     }

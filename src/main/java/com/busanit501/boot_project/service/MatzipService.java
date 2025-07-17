@@ -2,8 +2,8 @@ package com.busanit501.boot_project.service;
 
 import com.busanit501.boot_project.dto.PageRequestDTO;
 import com.busanit501.boot_project.dto.PageResponseDTO;
-import com.busanit501.boot_project.dto.matzip.MatzipResponseDTO;
+import com.busanit501.boot_project.dto.matzip.MatzipDTO;
 
 public interface MatzipService {
-    PageResponseDTO<MatzipResponseDTO.Item> getMatzipList(PageRequestDTO pageRequestDTO);
+    PageResponseDTO<MatzipDTO> getMatzipList(PageRequestDTO pageRequestDTO);
 }

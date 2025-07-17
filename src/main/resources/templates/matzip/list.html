@@ -1,49 +1,82 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
 <head>
-    <meta charset="UTF-8">
     <title>Busan Matzip List</title>
-    <link rel="stylesheet" href="/css/matzip.css">
+    <link rel="stylesheet" href="/css/matzip.css" layout:fragment="css">
     <!-- Bootstrap CSS for basic styling -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" layout:fragment="css">
 </head>
-<body>
-<div class="container">
-    <h1 class="my-4">Busan Matzip List</h1>
 
-    <div class="row">
-        <div th:each="matzip : ${responseDTO.dtoList}" class="col-md-6 mb-4">
-            <div class="card">
-                <img th:src="${matzip.mainImgThumb != null ? matzip.mainImgThumb : 'http://placehold.it/150x100?text=No+Image'}" class="card-img-top" alt="Matzip Thumbnail">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${matzip.mainTitle}"></h5>
-                    <p class="card-text"><strong>주소:</strong> <span th:text="${matzip.addr1}"></span></p>
-                    <p class="card-text"><strong>전화번호:</strong> <span th:text="${matzip.cntctTel}"></span></p>
-                    <p class="card-text"><strong>설명:</strong> <span th:text="${matzip.itemCntnts}"></span></p>
-                </div>
+<div layout:fragment="content">
+    <div class="container">
+        <h1 class="my-4">부산 맛집 리스트</h1>
+
+        <!-- Search Form -->
+        <form action="/matzip/list" method="get" class="mb-4">
+            <div class="input-group">
+                <select name="type" class="form-select">
+                    <option value="">---</option>
+                    <option value="t" th:selected="${pageRequestDTO.type == 't'}">상호명</option>
+                    <option value="a" th:selected="${pageRequestDTO.type == 'a'}">주소</option>
+                    <option value="c" th:selected="${pageRequestDTO.type == 'c'}">설명</option>
+                </select>
+                <input type="text" name="keyword" class="form-control" th:value="${pageRequestDTO.keyword}" placeholder="검색어를 입력하세요">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+                <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn">초기화</button>
             </div>
-        </div>
+        </form>
+
+        <!-- Matzip List Table -->
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>상호명</th>
+                <th>주소</th>
+                <th>전화번호</th>
+                <th>설명</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="matzip : ${responseDTO.dtoList}">
+                <td th:text="${matzip.mainTitle}"></td>
+                <td th:text="${matzip.addr1}"></td>
+                <td th:text="${matzip.cntctTel}"></td>
+                <td th:text="${matzip.itemCntnts}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(responseDTO.dtoList)}">
+                <td colspan="4" class="text-center">맛집 정보가 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item" th:if="${responseDTO.prev}">
+                    <a class="page-link" th:href="@{/matzip/list(page=${responseDTO.start - 1}, size=${responseDTO.size}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Previous</a>
+                </li>
+
+                <!-- Page Numbers -->
+                <li th:each="num : ${responseDTO.pageList}" class="page-item" th:classappend="${responseDTO.page == num} ? 'active' : ''">
+                    <a class="page-link" th:href="@{/matzip/list(page=${num}, size=${responseDTO.size}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}" th:text="${num}"></a>
+                </li>
+
+                <!-- Next Button -->
+                <li class="page-item" th:if="${responseDTO.next}">
+                    <a class="page-link" th:href="@{/matzip/list(page=${responseDTO.end + 1}, size=${responseDTO.size}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-
-    <!-- Pagination -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <!-- Previous Button -->
-            <li class="page-item" th:if="${responseDTO.prev}">
-                <a class="page-link" th:href="@{/matzip/list(page=${responseDTO.start - 1}, size=${responseDTO.size})}">Previous</a>
-            </li>
-
-            <!-- Page Numbers -->
-            <li th:each="num : ${responseDTO.pageList}" class="page-item" th:classappend="${responseDTO.page == num} ? 'active' : ''">
-                <a class="page-link" th:href="@{/matzip/list(page=${num}, size=${responseDTO.size})}" th:text="${num}"></a>
-            </li>
-
-            <!-- Next Button -->
-            <li class="page-item" th:if="${responseDTO.next}">
-                <a class="page-link" th:href="@{/matzip/list(page=${responseDTO.end + 1}, size=${responseDTO.size})}">Next</a>
-            </li>
-        </ul>
-    </nav>
 </div>
-</body>
-</html>
+
+<script layout:fragment="script">
+    document.getElementById('clearSearchBtn').addEventListener('click', function() {
+        document.querySelector('select[name="type"]').value = '';
+        document.querySelector('input[name="keyword"]').value = '';
+        document.querySelector('form').submit();
+    });
+</script>

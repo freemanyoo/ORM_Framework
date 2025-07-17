@@ -8,6 +8,7 @@ body {
 }
 h1 {
     margin-bottom: 20px;
+    font-size: 4em;
 }
 .weather-container {
     display: flex;
@@ -35,9 +36,10 @@ h1 {
 .weather-item h3 {
     margin-top: 0;
     color: #333;
+    font-size: 2.5em;
 }
 .weather-item p {
-    font-size: 1.2em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #007bff;
     margin: 5px 0;
@@ -45,7 +47,7 @@ h1 {
 
 /* 날씨 이모티콘 크기 및 색상 조정 */
 .weather-icon {
-    font-size: 4em;
+    font-size: 8em !important; /* 8em로 증가 및 !important 추가 */
     color: #FFD700;
     margin-bottom: 10px;
 }
