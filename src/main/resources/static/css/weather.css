@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+.center-container {
+    text-align: center;
+    padding: 20px;
+}
+h1 {
+    margin-bottom: 20px;
+}
+.weather-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+}
+.weather-item {
+    min-width: auto;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.main-weather-info {
+    width: 100%;
+}
+.weather-item h3 {
+    margin-top: 0;
+    color: #333;
+}
+.weather-item p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #007bff;
+    margin: 5px 0;
+}
+
+/* 날씨 이모티콘 크기 및 색상 조정 */
+.weather-icon {
+    font-size: 4em;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+.weather-description {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+.temperature {
+    font-size: 2em;
+    font-weight: bold;
+    color: #dc3545;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 날씨</title>
+    <link th:href="@{/css/weather.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="center-container">
+        <h1>오늘의 날씨 정보</h1>
+        <div th:if="${weather}" class="weather-container">
+            <div class="weather-item main-weather-info">
+                <h3>현재 날씨</h3>
+                <p class="weather-icon" th:text="${T(com.busanit501.boot_project.controller.WeatherController).getWeatherIcon(weather.weathercode)}"></p>
+                <p class="weather-description" th:text="${T(com.busanit501.boot_project.controller.WeatherController).getWeatherDescription(weather.weathercode)}"></p>
+                <p class="temperature"><span th:text="${weather.temperature}"></span> °C</p>
+            </div>
+        </div>
+        <div th:unless="${weather}">
+            <p>날씨 정보를 가져올 수 없습니다.</p>
+    </div>
+</body>
+</html>

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Getter
 @ToString
@@ -20,6 +22,8 @@ public class PageResponseDTO<E> {
     private boolean next;
 
     private List<E> dtoList;
+
+    private List<Integer> pageList; // This line is added.
 
     @Builder(builderMethodName = "withAll")
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
@@ -40,7 +44,7 @@ public class PageResponseDTO<E> {
         this.prev = this.start > 1;
         this.next = total > this.end * this.size;
 
+        // This part is added.
+        this.pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
     }
-
-
 }
